@@ -183,6 +183,7 @@
               ])
               //.color(['#1F78B4', '#5CA2D1', '#FF9900', '#D6301D', '#666666'])
               .stacked(true);
+		chart.legend.margin({bottom: 25});
             chart.yAxis.tickFormat(d3.format(",.0f"));
 
             d3.select("#chart1 svg").datum(a1).call(chart);
