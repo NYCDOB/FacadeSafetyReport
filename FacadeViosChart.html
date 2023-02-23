@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link href="build/nv.d3.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.2/d3.min.js" charset="utf-8"></script>
+    <script src="https://nycdob.github.io/ActiveNB_A1enlargements/build/nv.d3.js"></script>
+	<!-- <script src="../lib/stream_layers.js"></script> -->
+
+    <style>
+        text {
+            font: 14px sans-serif;
+        }
+        svg {
+            display: block;
+        }
+        html, body, #chart-boro-vios, svg {
+            margin: 0px;
+            padding: 0px;
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<div id="chart-boro-vios" class='with-3d-shadow with-transitions'>
+    <svg></svg>
+</div>
+
+<script>
+
+var points = [];
+	//d3.csv("https://raw.githubusercontent.com/NYCDOB/data_store/master/facadeLL11_v2.csv",function(data){
+	d3.csv("data/Active Facade ECB Violation.csv",function (data) {
+          points = data.map(function (d) {
+            d.boro = d["Boro-Occurrence"];
+            d.vioType = d["Vio Standard Description"];
+            return d;
+          });
+		
+		var vioTypeOrder = ["Failure to File Facade Technical Report","Failure to File Amended Facade Technical Report","Failure to Maintain Building Walls","Failure to Protect the Public"];
+		
+		var nestBoroVios = d3.nest()
+			.key(function(d){return d.vioType;}).sortKeys(function(a,b){return vioTypeOrder.indexOf(a) - vioTypeOrder.indexOf(b)}) //CUSTOM SORT
+			.key(function(d){return d.boro;})//.sortKeys(d3.ascending)
+			.rollup(function(v) { 
+				return v.length;
+			})
+			.entries(points)
+			
+			console.log(nestBoroVios);
+			
+		var vioKeyVals = ["BRONX", "BROOKLYN", "MANHATTAN", "QUEENS", "STATEN ISLAND"];
+		
+		//SET MISSING KEY VALUES TO ZERO	
+		makeAllKeys = function(d){
+			var allKeys = vioKeyVals
+			return allKeys
+		}				
+		nestBoroVios = nestBoroVios.map(function(d) {
+				  return {
+					key: d.key,
+					values: makeAllKeys(+d.key).map(function(k) {
+						value = d.values.filter(function(v) {return v.key == k})[0]
+						return value || ({key: k, values:0})
+						})
+						}
+					})
+			
+		//FORMAT NEST TO JSON (REQUIRED BY NVD3)
+		var a1_boro=[],t=0;
+		for (vObj of nestBoroVios ) {
+				obj={key: vObj.key }
+				a1_boro.push(obj);
+				a2=[];
+				for (x=0;x<vObj.values.length;x++) {
+				   obj1={};
+				   obj1.label=vObj.values[x].key;
+				   obj1["value"]=vObj.values[x].values 
+				   a2.push(obj1);
+				}
+				a1_boro[t].values=a2;
+				t++;
+		};
+		vioBoroChart(nestBoroVios, vioKeyVals);
+		
+		console.log(nestBoroVios);
+		
+		function vioBoroChart(data, sortData){
+			nv.addGraph(function() {
+				var chart = nv.models.multiBarChart()
+				.x(function(d) { return d.label })
+				.y(function(d) { return d.value })		
+				.duration(250)
+				.margin({top: 30, right: 10, bottom: 50, left: 50})
+				//.margin({right: 30})
+				//.xDomain(['Manhattan', 'Bronx', 'Brooklyn', 'Queens', 'Staten Island'])
+				.xDomain(sortData)
+				.color(
+				["#5678A6",
+                "#7EB7B1",
+                "#EA9135",
+                "#D95D5B"])
+				.showControls(false)
+				.stacked(true);
+				chart.legend.margin({bottom: 25});
+				chart.yAxis.tickFormat(d3.format('.0f'));
+				chart.yAxis
+					.axisLabel('# Active Violations')
+					.axisLabelDistance(-15);
+					chart.xAxis.axisLabelDistance(10);
+					chart.xAxis.tickFormat(function(d){
+						if (typeof this != 'undefined') {
+						var el = d3.select(this);
+						var p = d3.select(this.parentNode);
+						p.append("foreignObject")
+							.attr('x', -35)
+							.attr("width", 70)
+							.attr("height", 200)
+							.append("xhtml:p")
+							.attr('style','word-wrap: break-word; text-align:center; font: normal 10px sans-serif; pointer-events: auto;')
+							.html(d);
+							el.remove();
+							return d;
+						}
+				
+				});
+				
+				d3.select('#chart-boro-vios svg')
+						.datum(a1_boro)
+						.transition().duration(250)
+						.call(chart);
+				nv.utils.windowResize(chart.update);
+				return chart;
+					
+			})
+		}
+		/*	
+		function vioBoroChart(data){
+			var vioBoroData = [
+				{
+					key: "totals",
+					values: []
+				}
+			];
+
+			// populate the empty object with your data
+			data.forEach(function (d){
+				d.values = +d.values
+				vioBoroData[0].values.push(d)
+			})     
+			
+			
+			nv.addGraph(function() {				
+				var chart = nv.models.discreteBarChart()
+					.x(function (d) {  
+						return d.key 
+					})
+					.y(function (d) { 
+						return d.values 
+					})
+					.duration(250)
+					.margin({top: 15, right: 10, bottom: 20, left: 50})
+					.color(['#7899b0']);
+				chart.yAxis.tickFormat(d3.format(','));
+
+				chart.xAxis.tickFormat(function(d){
+					if (typeof this != 'undefined') {
+					 var el = d3.select(this);
+					 var p = d3.select(this.parentNode);
+					 p.append("foreignObject")
+						.attr('x', -100)
+						.attr("width", 200)
+						.attr("height", 200)
+						.append("xhtml:p")
+						.attr('style','word-wrap: break-word; text-align:center; font: normal 9px sans-serif;')
+						.html(d);    
+						el.remove();
+						return d;
+					}
+				});		
+				
+				d3.select('#chart-boro-facades svg')
+						.datum(vioBoroData)
+						.transition().duration(250)
+						.call(chart);
+				nv.utils.windowResize(chart.update);
+				return chart;
+			});
+		}
+		*/
+	});	
+</script>
+</body>
+</html>
