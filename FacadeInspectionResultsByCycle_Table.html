@@ -70,7 +70,8 @@
         var points = [];
         let cycles = new Map();
         //d3.csv("data/LocalLaw11FacadeCycles_v2.csv", function (data) {
-        d3.csv("data/Facade Status All Cycles.csv", function (data) {
+        //d3.csv("data/Facade Status All Cycles.csv", function (data) {
+	  d3.csv("https://raw.githubusercontent.com/NYCDOB/FacadeSafetyReport/gh-pages/data/Facade%20Status%20All%20Cycles.csv", function (data) {
           points = data.map(function (d) {
             d.cycle = parseInt(d.Cycle.substring(0, 2));
             d.status = d["CN Filing Status"];
