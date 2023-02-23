@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <link href="build/nv.d3.css" rel="stylesheet" type="text/css" />
+    <link href="https://nycdob.github.io/FacadeSafetyReport/build/nv.d3.css" rel="stylesheet" type="text/css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.2/d3.min.js" charset="utf-8"></script>
     <script src="https://nycdob.github.io/ActiveNB_A1enlargements/build/nv.d3.js"></script>
 	<!-- <script src="../lib/stream_layers.js"></script> -->
@@ -32,7 +32,8 @@
 
 var points = [];
 	//d3.csv("https://raw.githubusercontent.com/NYCDOB/data_store/master/facadeLL11_v2.csv",function(data){
-	d3.csv("data/Active Facade ECB Violation.csv",function (data) {
+	//d3.csv("data/Active Facade ECB Violation.csv",function (data) {
+	d3.csv("https://raw.githubusercontent.com/NYCDOB/FacadeSafetyReport/gh-pages/data/Active%20Facade%20ECB%20Violation.csv",function (data) {
           points = data.map(function (d) {
             d.boro = d["Boro-Occurrence"];
             d.vioType = d["Vio Standard Description"];
