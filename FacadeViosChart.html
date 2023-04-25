@@ -33,7 +33,7 @@
 var points = [];
 	//d3.csv("https://raw.githubusercontent.com/NYCDOB/data_store/master/facadeLL11_v2.csv",function(data){
 	//d3.csv("data/Active Facade ECB Violation.csv",function (data) {
-	d3.csv("https://raw.githubusercontent.com/NYCDOB/FacadeSafetyReport/gh-pages/data/Active%20Facade%20ECB%20Violation.csv",function (data) {
+	d3.csv("https://raw.githubusercontent.com/NYCDOB/FacadeSafetyReport/gh-pages/data/ActiveFacadeECBViolation.csv",function (data) {
           points = data.map(function (d) {
             d.boro = d["Boro-Occurrence"];
             d.vioType = d["Vio Standard Description"];
