@@ -69782,6 +69782,7 @@ Cycle,CN Filing Status,Control Number,CN Status Code
 9,SAFE,917855,Active
 9,SAFE,917857,Active
 9,SAFE,917860,Active
+9,SAFE,917868,Active
 9,SAFE,917870,Active
 9,SAFE,917871,Active
 9,SAFE,917872,Active
@@ -71563,6 +71564,7 @@ Cycle,CN Filing Status,Control Number,CN Status Code
 9,SWARMP,907944,Active
 9,SWARMP,907947,Active
 9,SWARMP,907957,Active
+9,SWARMP,907959,Active
 9,SWARMP,907981,Active
 9,SWARMP,907988,Active
 9,SWARMP,907993,Active
@@ -72327,6 +72329,7 @@ Cycle,CN Filing Status,Control Number,CN Status Code
 9,SWARMP,912599,Active
 9,SWARMP,912601,Active
 9,SWARMP,912604,Active
+9,SWARMP,912605,Active
 9,SWARMP,912609,Active
 9,SWARMP,912614,Active
 9,SWARMP,912626,Active
@@ -72990,7 +72993,6 @@ Cycle,CN Filing Status,Control Number,CN Status Code
 9,SWARMP,917853,Active
 9,SWARMP,917862,Active
 9,SWARMP,917867,Active
-9,SWARMP,917868,Active
 9,SWARMP,917875,Active
 9,SWARMP,917878,Active
 9,SWARMP,917883,Active
@@ -74533,7 +74535,6 @@ Cycle,CN Filing Status,Control Number,CN Status Code
 9,SWARMP (EXPIRED),907904,Active
 9,SWARMP (EXPIRED),907905,Active
 9,SWARMP (EXPIRED),907931,Active
-9,SWARMP (EXPIRED),907959,Active
 9,SWARMP (EXPIRED),907964,Active
 9,SWARMP (EXPIRED),907991,Active
 9,SWARMP (EXPIRED),907992,Active
@@ -77352,7 +77353,6 @@ Cycle,CN Filing Status,Control Number,CN Status Code
 9,UNSAFE,912576,Active
 9,UNSAFE,912578,Active
 9,UNSAFE,912587,Active
-9,UNSAFE,912605,Active
 9,UNSAFE,912623,Active
 9,UNSAFE,912630,Active
 9,UNSAFE,912633,Active
